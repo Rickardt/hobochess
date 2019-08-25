@@ -1,21 +1,21 @@
 import React from "react";
 
-function initializeBoard({ size, onBoxClick, Component }) {
+function initializeBoard({ size, component, onClick }) {
   let arrayX = new Array(size).fill();
 
   for (let i = 0; i < size; i++) {
     let column = new Array(size).fill();
     for (let j = 0; j < size; j++) {
-      column[j] = (
-        <Component
-          key={j}
-          xCoordinate={i}
-          yCoordinate={j}
-          onClick={onBoxClick}
-        />
-      );
+      column[j] = createBoxObject({
+        xCoordinate: i,
+        yCoordinate: j,
+        owner: 0,
+        component: component,
+        onClick: onClick,
+        key: `${i}${j}`
+      });
     }
-    arrayX[i] = <div key={i}>{column}</div>;
+    arrayX[i] = column;
   }
 
   return arrayX;
@@ -39,12 +39,70 @@ function checkForFiveInARow(board, clickedCoordinates, player) {
 }
 
 function checkHorizontalWin(board, clickedCoordinates, player) {
-  const { xCoordinate, yCoordinate } = clickedCoordinates;
-  console.log(board[(xCoordinate, yCoordinate)]);
+  // const { xCoordinate, yCoordinate } = clickedCoordinates;
+  // console.log(board[(xCoordinate, yCoordinate)]);
 }
 
 function checkVerticalWin(board, clickedCoordinates, player) {}
 
 function checkDiagonalWin(board, clickedCoordinates, player) {}
 
-export { initializeBoard, checkForFiveInARow };
+function createBoxObject({
+  xCoordinate,
+  yCoordinate,
+  owner,
+  component,
+  onClick,
+  key
+}) {
+  const Component = component;
+  return {
+    xCoordinate: xCoordinate,
+    yCoordinate: yCoordinate,
+    owner: owner,
+    component: (
+      <Component
+        xCoordinate={xCoordinate}
+        yCoordinate={yCoordinate}
+        owner={owner}
+        onClick={onClick}
+        key={key}
+      />
+    )
+  };
+}
+
+function updateBoxObject({
+  xCoordinate,
+  yCoordinate,
+  owner,
+  component,
+  onClick
+}) {
+  return {
+    xCoordinate: xCoordinate,
+    yCoordinate: yCoordinate,
+    owner: owner,
+    component: component
+  };
+}
+
+function updateBoard(board, coordinates, owner) {
+  const { xCoordinate, yCoordinate } = coordinates;
+  let updatedBoard = board;
+  updatedBoard[xCoordinate][yCoordinate] = updateBoxObject({
+    xCoordinate: xCoordinate,
+    yCoordinate: yCoordinate,
+    owner: owner,
+    component: updatedBoard[xCoordinate][yCoordinate].component
+  });
+  return updatedBoard;
+}
+
+export {
+  initializeBoard,
+  checkForFiveInARow,
+  createBoxObject,
+  updateBoard,
+  updateBoxObject
+};

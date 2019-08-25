@@ -1,8 +1,15 @@
 import React from "react";
+import Grow from "@material-ui/core/Grow";
 
-function Column({ children, xCoordinate }) {
+function Column({ children, timeOut }) {
   return (
-    <div>{React.cloneElement(children, { xCoordinate: `${xCoordinate}` })}</div>
+    <Grow
+      in={true}
+      style={{ transformOrigin: "0 0 0", width: "100px" }}
+      {...{ timeout: timeOut }}
+    >
+      <div>{children}</div>
+    </Grow>
   );
 }
 
