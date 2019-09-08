@@ -1,5 +1,5 @@
 import { SET_BOARD, UPDATE_BOARD } from "../constants/actions";
-import { updateBoard } from "../util/boardFunctions";
+import { updateBoard, checkForFiveInARow } from "../util/boardFunctions";
 
 const boardReducer = (state, action) => {
   switch (action.type) {
@@ -10,7 +10,9 @@ const boardReducer = (state, action) => {
       };
     case UPDATE_BOARD:
       const { coordinates, owner } = action.update;
-      let board = updateBoard(state.board, coordinates, owner);
+      const board = updateBoard(state.board, coordinates, owner);
+      let win = checkForFiveInARow(board, coordinates, owner);
+      console.log("Is it a win? ", win);
       return {
         ...state,
         board: board

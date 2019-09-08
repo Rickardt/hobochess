@@ -16,7 +16,6 @@ function Board({ size }) {
   const [{ boardState, playerState }, dispatch] = useStateValue();
   const { board } = boardState;
   const { turn } = playerState;
-  console.log(board);
 
   useEffect(() => {
     let initialBoard = initializeBoard({

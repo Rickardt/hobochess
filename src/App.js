@@ -6,6 +6,8 @@ import Box from "./components/Box/Box";
 import Board from "./components/Board/Board";
 import boardReducer from "./reducers/boardReducer";
 import playerReducer from "./reducers/playerReducer";
+import { ThemeProvider } from "@material-ui/styles";
+import theme from "./theme/theme";
 
 export const initialState = {
   boardState: [],
@@ -24,9 +26,11 @@ const mainReducer = ({ boardState, playerState }, action) => {
 function App() {
   return (
     <StateProvider initialState={initialState} reducer={mainReducer}>
-      <div className="App">
-        <Board size={10} />
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Board size={8} />
+        </div>
+      </ThemeProvider>
     </StateProvider>
   );
 }
