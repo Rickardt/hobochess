@@ -12,12 +12,16 @@ import {
   SET_NEXT_TURN
 } from "../../constants/actions";
 
-function Board({ size }) {
+function Board({ size, requiredLengtToWin }) {
   const [{ boardState, playerState }, dispatch] = useStateValue();
-  const { board } = boardState;
+  const { board, fiveInARow } = boardState;
   const { turn } = playerState;
 
   useEffect(() => {
+    createBoard();
+  }, []);
+
+  function createBoard() {
     let initialBoard = initializeBoard({
       size,
       component: Box,
@@ -25,13 +29,13 @@ function Board({ size }) {
     });
     dispatch({
       type: SET_BOARD,
-      board: initialBoard
+      setBoard: { board: initialBoard, requiredLengtToWin: requiredLengtToWin }
     });
     dispatch({
       type: SET_TURN,
       turn: 1
     });
-  }, []);
+  }
 
   function onBoxClick(coordinates, owner) {
     console.log("Clicked coordinates: ", coordinates);

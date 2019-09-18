@@ -2,25 +2,28 @@ import React from "react";
 import { StateProvider } from "./state/state";
 import logo from "./logo.svg";
 import "./App.css";
-import Box from "./components/Box/Box";
-import Board from "./components/Board/Board";
-import boardReducer from "./reducers/boardReducer";
-import playerReducer from "./reducers/playerReducer";
+import boardReducer, {
+  initialState as boardState
+} from "./reducers/boardReducer";
+import playerReducer, {
+  initialState as playerState
+} from "./reducers/playerReducer";
+import GameContainer from "./components/GameContainer/GameContainer";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./theme/theme";
 
 export const initialState = {
-  boardState: [],
-  playerState: {
-    turn: 1
-  }
+  boardState,
+  playerState
 };
 const mainReducer = ({ boardState, playerState }, action) => {
   console.log("ACTION: ", action);
-  return {
+  const state = {
     boardState: boardReducer(boardState, action),
     playerState: playerReducer(playerState, action)
   };
+  console.log("STATE: ", state);
+  return state;
 };
 
 function App() {
@@ -28,7 +31,7 @@ function App() {
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <ThemeProvider theme={theme}>
         <div className="App">
-          <Board size={8} />
+          <GameContainer />
         </div>
       </ThemeProvider>
     </StateProvider>

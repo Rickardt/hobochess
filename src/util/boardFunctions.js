@@ -21,10 +21,30 @@ function initializeBoard({ size, component, onClick }) {
   return arrayX;
 }
 
-function checkForFiveInARow(board, clickedCoordinates, player) {
-  const isHorizontalWin = checkHorizontalWin(board, clickedCoordinates, player);
-  const isVerticalWin = checkVerticalWin(board, clickedCoordinates, player);
-  const isDiagonalWin = checkDiagonalWin(board, clickedCoordinates, player);
+function checkForFiveInARow(
+  board,
+  clickedCoordinates,
+  player,
+  requiredLengtToWin
+) {
+  const isHorizontalWin = checkHorizontalWin(
+    board,
+    clickedCoordinates,
+    player,
+    requiredLengtToWin
+  );
+  const isVerticalWin = checkVerticalWin(
+    board,
+    clickedCoordinates,
+    player,
+    requiredLengtToWin
+  );
+  const isDiagonalWin = checkDiagonalWin(
+    board,
+    clickedCoordinates,
+    player,
+    requiredLengtToWin
+  );
   let fiveInARow = false;
   let winningCoordinates = [];
   if (isHorizontalWin.isWin) {
@@ -49,7 +69,12 @@ function checkForFiveInARow(board, clickedCoordinates, player) {
   return checkResault;
 }
 
-function checkHorizontalWin(board, clickedCoordinates, player) {
+function checkHorizontalWin(
+  board,
+  clickedCoordinates,
+  player,
+  requiredLengtToWin
+) {
   const { xCoordinate, yCoordinate } = clickedCoordinates;
   let win = { isWin: false, coordinates: null };
   let sequence = [];
@@ -70,7 +95,7 @@ function checkHorizontalWin(board, clickedCoordinates, player) {
     } else {
       break;
     }
-    if (j === 5) {
+    if (j === requiredLengtToWin) {
       lookForWinLeft = false;
     }
     j++;
@@ -87,20 +112,25 @@ function checkHorizontalWin(board, clickedCoordinates, player) {
     } else {
       break;
     }
-    if (i === 5) {
+    if (i === requiredLengtToWin) {
       lookForWinLeft = false;
     }
     i++;
   }
   win.coordinates = sequence;
   console.log("Sequence: ", sequence);
-  if (sequence.length >= 5) {
+  if (sequence.length >= requiredLengtToWin) {
     win.isWin = true;
   }
   return win;
 }
 
-function checkVerticalWin(board, clickedCoordinates, player) {
+function checkVerticalWin(
+  board,
+  clickedCoordinates,
+  player,
+  requiredLengtToWin
+) {
   const { xCoordinate, yCoordinate } = clickedCoordinates;
   let win = { isWin: false, coordinates: null };
   let sequence = [];
@@ -119,7 +149,7 @@ function checkVerticalWin(board, clickedCoordinates, player) {
     } else {
       break;
     }
-    if (j === 5) {
+    if (j === requiredLengtToWin) {
       lookForWin = false;
     }
     j++;
@@ -136,20 +166,25 @@ function checkVerticalWin(board, clickedCoordinates, player) {
     } else {
       break;
     }
-    if (i === 5) {
+    if (i === requiredLengtToWin) {
       lookForWin = false;
     }
     i++;
   }
   win.coordinates = sequence;
   console.log("Sequence: ", sequence);
-  if (sequence.length >= 5) {
+  if (sequence.length >= requiredLengtToWin) {
     win.isWin = true;
   }
   return win;
 }
 
-function checkDiagonalWin(board, clickedCoordinates, player) {
+function checkDiagonalWin(
+  board,
+  clickedCoordinates,
+  player,
+  requiredLengtToWin
+) {
   const { xCoordinate, yCoordinate } = clickedCoordinates;
   let win = { isWin: false, coordinates: null };
   let sequence = [];
@@ -171,7 +206,7 @@ function checkDiagonalWin(board, clickedCoordinates, player) {
     } else {
       break;
     }
-    if (j === 5) {
+    if (j === requiredLengtToWin) {
       lookForWinLeft = false;
     }
     j++;
@@ -189,14 +224,14 @@ function checkDiagonalWin(board, clickedCoordinates, player) {
     } else {
       break;
     }
-    if (i === 5) {
+    if (i === requiredLengtToWin) {
       lookForWinLeft = false;
     }
     i++;
   }
   win.coordinates = sequence;
   console.log("Sequence: ", sequence);
-  if (sequence.length >= 5) {
+  if (sequence.length >= requiredLengtToWin) {
     win.isWin = true;
   }
   return win;
