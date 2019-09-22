@@ -91,7 +91,7 @@ function checkHorizontalWin(
     }
     let box = board[coordinate][yCoordinate];
     if (box.owner === player) {
-      sequence.push(coordinate);
+      sequence.push(box);
     } else {
       break;
     }
@@ -108,7 +108,7 @@ function checkHorizontalWin(
     }
     let box = board[coordinate][yCoordinate];
     if (box.owner === player) {
-      sequence.push(coordinate);
+      sequence.push(box);
     } else {
       break;
     }
@@ -145,7 +145,7 @@ function checkVerticalWin(
     }
     let box = board[xCoordinate][coordinate];
     if (box.owner === player) {
-      sequence.push(coordinate);
+      sequence.push(box);
     } else {
       break;
     }
@@ -162,7 +162,7 @@ function checkVerticalWin(
     }
     let box = board[xCoordinate][coordinate];
     if (box.owner === player) {
-      sequence.push(coordinate);
+      sequence.push(box);
     } else {
       break;
     }
@@ -183,7 +183,8 @@ function checkDiagonalWin(
   board,
   clickedCoordinates,
   player,
-  requiredLengtToWin
+  requiredLengtToWin,
+  switchDirection = false
 ) {
   const { xCoordinate, yCoordinate } = clickedCoordinates;
   let win = { isWin: false, coordinates: null };
@@ -195,14 +196,16 @@ function checkDiagonalWin(
 
   let j = 0;
   while (lookForWinLeft) {
-    const coorinateX = xCoordinate - j;
-    const coorinateY = yCoordinate - j;
-    if (coorinateX < 0 || coorinateY < 0) {
+    const coorinateX = switchDirection ? xCoordinate - j : xCoordinate + j;
+    const coorinateY = switchDirection ? yCoordinate - j : yCoordinate - j;
+    const xBoundary = coorinateX > board.length - 1 || coorinateX < 0;
+    const yBoundary = coorinateY > board.length - 1 || coorinateY < 0;
+    if (xBoundary || yBoundary) {
       break;
     }
     let box = board[coorinateX][coorinateY];
     if (box.owner === player) {
-      sequence.push({ coorinateX, coorinateY });
+      sequence.push(box);
     } else {
       break;
     }
@@ -213,14 +216,16 @@ function checkDiagonalWin(
   }
   let i = 1;
   while (lookForWinLeft) {
-    const coorinateX = xCoordinate + i;
-    const coorinateY = yCoordinate + i;
-    if (coorinateX > board.length - 1 || coorinateY > board.length - 1) {
+    const coorinateX = switchDirection ? xCoordinate + i : xCoordinate - i;
+    const coorinateY = switchDirection ? yCoordinate + i : yCoordinate + i;
+    const xBoundary = coorinateX > board.length - 1 || coorinateX < 0;
+    const yBoundary = coorinateY > board.length - 1 || coorinateY < 0;
+    if (xBoundary || yBoundary) {
       break;
     }
     let box = board[coorinateX][coorinateY];
     if (box.owner === player) {
-      sequence.push({ coorinateX, coorinateY });
+      sequence.push(box);
     } else {
       break;
     }
@@ -233,6 +238,16 @@ function checkDiagonalWin(
   console.log("Sequence: ", sequence);
   if (sequence.length >= requiredLengtToWin) {
     win.isWin = true;
+  }
+  if (!win.isWin && !switchDirection) {
+    console.log("SwWITCH DIRECTION");
+    win = checkDiagonalWin(
+      board,
+      clickedCoordinates,
+      player,
+      requiredLengtToWin,
+      true
+    );
   }
   return win;
 }

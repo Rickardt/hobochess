@@ -4,7 +4,8 @@ import { updateBoard, checkForFiveInARow } from "../util/boardFunctions";
 export const initialState = {
   fiveInARow: false,
   board: [],
-  requiredLengtToWin: 5
+  requiredLengtToWin: 5,
+  winningPlayer: null
 };
 
 const boardReducer = (state, action) => {
@@ -29,7 +30,8 @@ const boardReducer = (state, action) => {
       return {
         ...state,
         board: updatedBoard,
-        fiveInARow: win.fiveInARow
+        fiveInARow: win.fiveInARow,
+        winningPlayer: owner
       };
 
     default:
