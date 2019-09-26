@@ -11,8 +11,17 @@ import playerReducer, {
 import GameContainer from "./components/GameContainer/GameContainer";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./theme/theme";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
-export const initialState = {
+import StartPage from "./pages/StartPage/StartPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory();
+
+const initialState = {
   boardState,
   playerState
 };
@@ -28,13 +37,17 @@ const mainReducer = ({ boardState, playerState }, action) => {
 
 function App() {
   return (
-    <StateProvider initialState={initialState} reducer={mainReducer}>
-      <ThemeProvider theme={theme}>
-        <div className="App">
-          <GameContainer />
-        </div>
-      </ThemeProvider>
-    </StateProvider>
+    <div className="App">
+      <Router history={history}>
+        <StateProvider initialState={initialState} reducer={mainReducer}>
+          <ThemeProvider theme={theme}>
+            <Route path="/" exact component={StartPage} />
+            <Route path="/local-game" component={GameContainer} />
+            <Route path="/login" component={LoginPage} />
+          </ThemeProvider>
+        </StateProvider>
+      </Router>
+    </div>
   );
 }
 

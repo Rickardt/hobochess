@@ -22,7 +22,7 @@ function GameContainer({}) {
   return (
     <div>
       {!fiveInARow && renderGameStats()}
-      {fiveInARow ? renderWin() : <Board size={7} requiredLengtToWin={3} />}
+      {fiveInARow ? renderWin() : <Board size={20} requiredLengtToWin={5} />}
     </div>
   );
 }
