@@ -1,6 +1,5 @@
-function getTurn(turn) {
-  console.log(turn);
-  return turn ? 0 : 1;
+function setNextTurn(turn) {
+  return turn === 1 ? 2 : 1;
 }
 
-export { getTurn };
+export { setNextTurn };

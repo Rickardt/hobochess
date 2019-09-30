@@ -1,0 +1,17 @@
+.start-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.start-page-button-container {
+  width: 40%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: green;
+  border: 2px solid black;
+}
