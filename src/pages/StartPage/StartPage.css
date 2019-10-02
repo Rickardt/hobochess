@@ -8,10 +8,9 @@
 .start-page-button-container {
   width: 40%;
   height: 60%;
+  max-height: 350px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  background-color: green;
-  border: 2px solid black;
 }

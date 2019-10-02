@@ -27,10 +27,8 @@ function Box({ yCoordinate, xCoordinate, onClick, initialAnimationTimeout }) {
   const Icon = icon;
 
   function calculateTimeout() {
-    console.log(board.length);
     const center = board.length / 2;
     const xCenter = (center % xCoordinate) * 100;
-    console.log(xCenter);
     const yCenter = (center % yCoordinate) * 100;
     return xCenter + yCenter;
   }
@@ -51,17 +49,11 @@ function Box({ yCoordinate, xCoordinate, onClick, initialAnimationTimeout }) {
       });
     }
     setChecked(true);
-
     const turn = onClick(coordinates, boxOwner);
-    console.log("Box turn", boxOwner);
   }
 
   return (
-    <Fade
-      in={true}
-      style={{ transformOrigin: "0 0 0", width: "100px" }}
-      {...{ timeout: calculateTimeout() }}
-    >
+    <Fade in={true} style={{ transformOrigin: "0 0 0" }} {...{ timeout: 1000 }}>
       <Checkbox
         checked={checked}
         onChange={setBoxState}

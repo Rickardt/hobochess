@@ -8,14 +8,20 @@ import boardReducer, {
 import playerReducer, {
   initialState as playerState
 } from "./reducers/playerReducer";
-import GameContainer from "./components/GameContainer/GameContainer";
+
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./theme/theme";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
+import { Router, Route, Link, Switch } from "react-router-dom";
 
-import StartPage from "./pages/StartPage/StartPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
+import {
+  StartPage,
+  ErrorBoundary,
+  CreateGame,
+  LocalGame,
+  LoginPage
+} from "./pages";
+
+import Background from "./components/Background/Background";
 
 import { createBrowserHistory } from "history";
 
@@ -37,17 +43,28 @@ const mainReducer = ({ boardState, playerState }, action) => {
 
 function App() {
   return (
-    <div className="App">
-      <Router history={history}>
+    <ErrorBoundary>
+      <div className="App">
         <StateProvider initialState={initialState} reducer={mainReducer}>
           <ThemeProvider theme={theme}>
-            <Route path="/" exact component={StartPage} />
-            <Route path="/local-game" component={GameContainer} />
-            <Route path="/login" component={LoginPage} />
+            <Router history={history}>
+              <Route
+                render={({ location }) => (
+                  <Background location={location}>
+                    <Switch location={location}>
+                      <Route path="/" exact component={StartPage} />
+                      <Route path="/local-game" component={LocalGame} />
+                      <Route path="/create-local-game" component={CreateGame} />
+                      <Route path="/login" component={LoginPage} />
+                    </Switch>
+                  </Background>
+                )}
+              />
+            </Router>
           </ThemeProvider>
         </StateProvider>
-      </Router>
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 
