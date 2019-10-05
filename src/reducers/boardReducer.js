@@ -1,4 +1,9 @@
-import { SET_BOARD, UPDATE_BOARD, SET_BOARD_RULES } from "../constants/actions";
+import {
+  SET_BOARD,
+  UPDATE_BOARD,
+  SET_BOARD_RULES,
+  RESET_BOARD
+} from "../constants/actions";
 import { updateBoard, checkForFiveInARow } from "../util/boardFunctions";
 
 export const initialState = {
@@ -24,6 +29,11 @@ const boardReducer = (state, action) => {
         ...state,
         boardSize: boardSize,
         requiredLengtToWin: requiredLengtToWin
+      };
+    case RESET_BOARD:
+      return {
+        ...state,
+        initialState
       };
     case UPDATE_BOARD:
       const { coordinates, owner } = action.update;

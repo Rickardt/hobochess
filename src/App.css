@@ -11,3 +11,13 @@
 .margin-Divider {
   margin: 20px;
 }
+.error-message {
+  color: red;
+}
+h1 {
+  font-size: 20px;
+  color: white;
+}
+button {
+  /*margin: 10px !important;*/
+}
