@@ -23,9 +23,13 @@ function Login({ history }) {
     const response = await login(username, password);
     setLoading(false);
     if (response.error) {
-      console.log(response.error);
-      history.push(CONFIRM_ACCOUNT);
-      setErrorMessage(response.error.message);
+      if (response.error.code === "UserNotConfirmedException") {
+        console.log(response.error);
+        history.push(CONFIRM_ACCOUNT);
+      } else {
+        console.log(response.error);
+        setErrorMessage(response.error.message);
+      }
     } else {
       history.push(DASHBOARD);
     }

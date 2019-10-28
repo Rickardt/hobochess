@@ -24,12 +24,15 @@ const Background = ({ children, onExit, location }) => {
     <TransitionGroup className="transition-group-container">
       <CSSTransition
         key={location.key}
-        timeout={600}
+        timeout={{
+          enter: 6000,
+          exit: 0
+        }}
         classNames={
-          getPathDepth(location) - depth ? "slide-left" : "slide-right"
+          "alert"
+          //getPathDepth(location) - depth ? "slide-left" : "slide-right"
         }
-        mountOnEnter={true}
-        unmountOnExit={true}
+        unmountOnExit
       >
         {children}
       </CSSTransition>

@@ -67,6 +67,11 @@ function confirmCreatedAccount(username, code) {
     .then(data => data)
     .catch(err => err);
 }
+function logout() {
+  return Auth.signOut()
+    .then(data => data)
+    .catch(err => err);
+}
 
 function storeToken(token) {
   localStorage.setItem("token", token);
@@ -78,4 +83,11 @@ function removeToken() {
   localStorage.removeItem("token");
 }
 
-export { login, getToken, removeToken, createAccount, confirmCreatedAccount };
+export {
+  login,
+  getToken,
+  removeToken,
+  createAccount,
+  confirmCreatedAccount,
+  logout
+};

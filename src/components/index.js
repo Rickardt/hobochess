@@ -5,6 +5,9 @@ import Authenticator from "./Authenticator";
 import CreateAccount from "./CreateAccount";
 import Login from "./Login";
 import ConfirmAccount from "./ConfirmAccount";
+import ProfileMenu from "./ProfileMenu";
+import ProfileFeed from "./ProfileFeed";
+import ProfileScoreBoard from "./ProfileScoreBoard";
 
 export {
   GameMenu,
@@ -13,5 +16,8 @@ export {
   Authenticator,
   CreateAccount,
   Login,
-  ConfirmAccount
+  ConfirmAccount,
+  ProfileMenu,
+  ProfileFeed,
+  ProfileScoreBoard
 };
