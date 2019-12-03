@@ -1,0 +1,5 @@
+.create-accoumt-credentials-container,
+.create-accoumt-button-container {
+  display: flex;
+  flex-direction: column;
+}

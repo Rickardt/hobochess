@@ -1,21 +1,39 @@
-import { SET_BOARD, UPDATE_BOARD } from "../constants/actions";
+import {
+  SET_BOARD,
+  UPDATE_BOARD,
+  SET_BOARD_RULES,
+  RESET_BOARD
+} from "../constants/actions";
 import { updateBoard, checkForFiveInARow } from "../util/boardFunctions";
 
 export const initialState = {
   fiveInARow: false,
   board: [],
   requiredLengtToWin: 5,
+  boardSize: 8,
   winningPlayer: null
 };
 
 const boardReducer = (state, action) => {
   switch (action.type) {
     case SET_BOARD:
-      const { board, requiredLengtToWin } = action.setBoard;
+      const { board } = action.setBoard;
       return {
         ...state,
-        board: board,
+        board: board
+      };
+
+    case SET_BOARD_RULES:
+      const { boardSize, requiredLengtToWin } = action.setBoardRules;
+      return {
+        ...state,
+        boardSize: boardSize,
         requiredLengtToWin: requiredLengtToWin
+      };
+    case RESET_BOARD:
+      return {
+        ...state,
+        initialState
       };
     case UPDATE_BOARD:
       const { coordinates, owner } = action.update;
@@ -26,7 +44,6 @@ const boardReducer = (state, action) => {
         owner,
         state.requiredLengtToWin
       );
-      console.log("Is it a win? ", win);
       return {
         ...state,
         board: updatedBoard,

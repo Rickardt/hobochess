@@ -1,0 +1,20 @@
+.game-statistics-card {
+  width: 100%;
+  max-width: 550px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 225px);
+  z-index: 10;
+}
+.side-menu-icon {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+.side-menu-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

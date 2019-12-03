@@ -29,7 +29,7 @@ function Board({ size, requiredLengtToWin }) {
     });
     dispatch({
       type: SET_BOARD,
-      setBoard: { board: initialBoard, requiredLengtToWin: requiredLengtToWin }
+      setBoard: { board: initialBoard }
     });
     dispatch({
       type: SET_TURN,

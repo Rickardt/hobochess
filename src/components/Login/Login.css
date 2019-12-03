@@ -1,0 +1,5 @@
+.login-credentials-container,
+.login-button-container {
+  display: flex;
+  flex-direction: column;
+}
