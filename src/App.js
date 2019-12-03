@@ -2,12 +2,9 @@ import React from "react";
 import { StateProvider } from "./state/state";
 import logo from "./logo.svg";
 import "./App.css";
-import boardReducer, {
-  initialState as boardState
-} from "./reducers/boardReducer";
-import playerReducer, {
-  initialState as playerState
-} from "./reducers/playerReducer";
+import { initialState as boardState } from "./reducers/boardReducer";
+import { initialState as playerState } from "./reducers/playerReducer";
+import mainReducer from "./reducers/mainReducer";
 
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./theme/theme";
@@ -33,29 +30,52 @@ import Background from "./components/Background/Background";
 import { createBrowserHistory } from "history";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
+import { setContext } from "apollo-link-context";
+import { createHttpLink } from "apollo-link-http";
 import { Auth } from "aws-amplify";
 import { awsAuthConfig } from "./config/awsAuthConfig";
 
 Auth.configure(awsAuthConfig);
 
+// const httpLink = createHttpLink({
+//   uri:
+//
+// });
+//
+// const authLink = setContext((_, { headers }) => {
+//   // get the authentication token from local storage if it exists
+//   const token = localStorage.getItem("token");
+//   // return the headers to the context so httpLink can read them
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : ""
+//     }
+//   };
+//});
+
 const client = new ApolloClient({
-  uri: "https://48p1r2roz4.sse.codesandbox.io"
+  uri:
+    "https://wyo23ywn7ve57ezgb6kv72nh5q.appsync-api.eu-west-1.amazonaws.com/graphql",
+  request: operation => {
+    const token = localStorage.getItem("token");
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : ""
+      }
+    });
+  }
 });
+console.log("Herpaderp!");
+if (process.env.NODE_ENV === "production") {
+  console.log = () => {};
+}
 
 const history = createBrowserHistory();
 
 const initialState = {
   boardState,
   playerState
-};
-const mainReducer = ({ boardState, playerState }, action) => {
-  console.log("ACTION: ", action);
-  const state = {
-    boardState: boardReducer(boardState, action),
-    playerState: playerReducer(playerState, action)
-  };
-  console.log("STATE: ", state);
-  return state;
 };
 
 function App() {

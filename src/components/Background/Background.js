@@ -8,18 +8,22 @@ import "./Background.css";
 const Background = ({ children, onExit, location }) => {
   const [mounted, setMounted] = useState(false);
   const [depth, setDepth] = useState();
+
   function getPathDepth(location) {
     return (location || {}).pathname.split("/").length;
   }
+
   function updateDepth() {
     setDepth(getPathDepth(location));
   }
+
   useEffect(() => {
     setMounted(true);
     return function() {
       setMounted(false);
     };
   }, [updateDepth]);
+
   return (
     <TransitionGroup className="transition-group-container">
       <CSSTransition

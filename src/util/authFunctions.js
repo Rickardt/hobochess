@@ -83,11 +83,18 @@ function removeToken() {
   localStorage.removeItem("token");
 }
 
+function getSession() {
+  return Auth.currentSession()
+    .then(data => data)
+    .catch(err => console.log(err));
+}
+
 export {
   login,
   getToken,
   removeToken,
   createAccount,
   confirmCreatedAccount,
-  logout
+  logout,
+  getSession
 };
