@@ -76,8 +76,13 @@ function logout() {
 function storeToken(token) {
   localStorage.setItem("token", token);
 }
-function getToken() {
-  return localStorage.getItem("token");
+async function getToken() {
+  const session = await getSession();
+  if (session) {
+    return session.accessToken.jwtToken;
+  } else {
+    return undefined;
+  }
 }
 function removeToken() {
   localStorage.removeItem("token");
@@ -89,6 +94,14 @@ function getSession() {
     .catch(err => console.log(err));
 }
 
+function getUser() {
+  return Auth.currentAuthenticatedUser({
+    bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+  })
+    .then(user => user)
+    .catch(err => console.log(err));
+}
+
 export {
   login,
   getToken,
@@ -96,5 +109,6 @@ export {
   createAccount,
   confirmCreatedAccount,
   logout,
-  getSession
+  getSession,
+  getUser
 };

@@ -7,7 +7,6 @@ function ProfileScoreBoard({ hostory }) {
     <div>
       <h1>Score board</h1>
       Rickie 30 wins <Divider />
-      Peggy 29 wins
     </div>
   );
 }

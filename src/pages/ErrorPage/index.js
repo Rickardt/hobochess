@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.css";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -25,8 +26,12 @@ class ErrorBoundary extends React.Component {
     const { children } = this.props;
     if (hasError) {
       return (
-        <div>
-          <h2>Something went wrong.</h2>
+        <div className="error-container">
+          <h2>Oh shiiie! Something went terribly wrong!</h2>
+          <h4>
+            Plz send this info to the developer and specify what you did to make
+            this happen!
+          </h4>
           <details style={{ whiteSpace: "pre-wrap" }}>
             {error && error.toString()}
             <br />
