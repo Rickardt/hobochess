@@ -22,7 +22,9 @@ function Dashboard({ history }) {
   useEffect(() => {
     async function checkUserSession() {
       const data = await getUser();
-      setUser(data);
+      if (data) {
+        setUser(data);
+      }
     }
     checkUserSession();
   }, []);
