@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Authenticator,
   ProfileMenu,
@@ -8,22 +8,30 @@ import {
 import Button from "@material-ui/core/Button";
 import { useMutation } from "@apollo/react-hooks";
 import { TEST_POST } from "../../gql/mutations/exampleMutations";
-import { getSession } from "../../util/authFunctions";
+import { getUser } from "../../util/authFunctions";
 import "./style.css";
 
-function Dashboard({ hostory }) {
+function Dashboard({ history }) {
   const [putPost, { data }] = useMutation(TEST_POST);
+  const [user, setUser] = useState({ username: "" });
+
   async function sendPost() {
-    const data = await getSession();
-    console.log(data);
     putPost("123", "Hello world");
   }
+
+  useEffect(() => {
+    async function checkUserSession() {
+      const data = await getUser();
+      setUser(data);
+    }
+    checkUserSession();
+  }, []);
 
   return (
     <Authenticator>
       <div className="dashboard-container">
         <div className="profile-container">
-          <ProfileMenu />
+          <ProfileMenu history={history} userName={user.username} />
         </div>
         <div className="feed-container">
           <Button onClick={sendPost}> GQL TEST</Button>

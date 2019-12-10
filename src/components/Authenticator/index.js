@@ -1,14 +1,22 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Redirect, Route } from "react-router-dom";
 import { LOGIN_PAGE } from "../../constants/routes";
 import { getToken } from "../../util/authFunctions";
 
 function Authenticator({ children }) {
-  if (getToken()) {
-    return children;
-  } else {
-    return <Redirect to={LOGIN_PAGE} />;
-  }
+  const [token, setToken] = useState(true);
+
+  useEffect(() => {
+    async function checkToken() {
+      const token = await getToken();
+      setToken(token);
+    }
+    checkToken();
+  }, []);
+
+  return (
+    <Route render={() => (token ? children : <Redirect to={LOGIN_PAGE} />)} />
+  );
 }
 
 export default Authenticator;

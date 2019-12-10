@@ -33,43 +33,28 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
 import { createHttpLink } from "apollo-link-http";
 import { Auth } from "aws-amplify";
+import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import { awsAuthConfig } from "./config/awsAuthConfig";
+import { getSession } from "./util/authFunctions";
 
-Auth.configure(awsAuthConfig);
-
-// const httpLink = createHttpLink({
-//   uri:
-//
-// });
-//
-// const authLink = setContext((_, { headers }) => {
-//   // get the authentication token from local storage if it exists
-//   const token = localStorage.getItem("token");
-//   // return the headers to the context so httpLink can read them
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : ""
-//     }
-//   };
-//});
-
-const client = new ApolloClient({
-  uri:
-    "https://wyo23ywn7ve57ezgb6kv72nh5q.appsync-api.eu-west-1.amazonaws.com/graphql",
-  request: operation => {
-    const token = localStorage.getItem("token");
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : ""
-      }
-    });
-  }
-});
-console.log("Herpaderp!");
 if (process.env.NODE_ENV === "production") {
   console.log = () => {};
 }
+
+Auth.configure(awsAuthConfig);
+
+// Set up Apollo client
+const client = new AWSAppSyncClient({
+  url:
+    "https://wyo23ywn7ve57ezgb6kv72nh5q.appsync-api.eu-west-1.amazonaws.com/graphql",
+  region: "eu-west-1",
+  auth: {
+    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+    jwtToken: async () =>
+      (await Auth.currentSession()).getIdToken().getJwtToken()
+  }
+  //disableOffline: true      //Uncomment for AWS Lambda
+});
 
 const history = createBrowserHistory();
 
@@ -94,7 +79,11 @@ function App() {
                         <Route path={LOCAL_GAME_PAGE} component={LocalGame} />
                         <Route path={CREATE_GAME} component={CreateGame} />
                         <Route path={LOGIN_PAGE} component={LoginPage} />
-                        <Route path={DASHBOARD} component={Dashboard} />
+                        <Route
+                          path={DASHBOARD}
+                          history={history}
+                          component={Dashboard}
+                        />
                       </Switch>
                     </Background>
                   )}

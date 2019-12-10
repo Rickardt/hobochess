@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -12,15 +12,17 @@ import MailIcon from "@material-ui/icons/Mail";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
+import LogoutModal from "../Modals/LogoutModal";
 
-function Profile() {
+function Profile({ userName, history }) {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   return (
     <div>
       <div>
         <Avatar>
           <AccountCircleIcon />
         </Avatar>
-        Rickard
+        {userName}
       </div>
       <div role="presentation">
         <List>
@@ -35,7 +37,11 @@ function Profile() {
             <ListItemText primary="Profile settings" />
           </ListItem>
           <Divider />
-          <ListItem button key="exit-game">
+          <ListItem
+            button
+            key="exit-game"
+            onClick={() => setShowLogoutModal(true)}
+          >
             <ListItemIcon>
               <CloseIcon />
             </ListItemIcon>
@@ -43,6 +49,11 @@ function Profile() {
           </ListItem>
         </List>
       </div>
+      <LogoutModal
+        open={showLogoutModal}
+        history={history}
+        onClose={() => setShowLogoutModal(false)}
+      />
     </div>
   );
 }
