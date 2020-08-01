@@ -4,6 +4,7 @@ import ErrorBoundary from "./ErrorPage";
 import CreateGame from "./CreateGame";
 import LocalGame from "./LocalGame";
 import Dashboard from "./Dashboard";
+import OnlineGame from "./OnlineGame";
 
 export {
   StartPage,
@@ -11,5 +12,6 @@ export {
   ErrorBoundary,
   CreateGame,
   LocalGame,
-  Dashboard
+  Dashboard,
+  OnlineGame
 };

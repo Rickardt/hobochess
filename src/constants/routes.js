@@ -5,6 +5,7 @@ const CREATE_GAME = "/create-local-game";
 const DASHBOARD = "/dashboard";
 const CREATE_ACCOUNT = "/create-account";
 const CONFIRM_ACCOUNT = "/login/confirm-account";
+const ONLINE_GAME_PAGE = "/online-game/:id";
 
 export {
   START_PAGE,
@@ -13,5 +14,6 @@ export {
   CREATE_GAME,
   DASHBOARD,
   CREATE_ACCOUNT,
-  CONFIRM_ACCOUNT
+  CONFIRM_ACCOUNT,
+  ONLINE_GAME_PAGE
 };

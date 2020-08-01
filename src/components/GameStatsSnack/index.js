@@ -43,8 +43,14 @@ const GameStatsSnack = ({ text, turn }) => {
       }}
       message={
         <span>
-          {text}
-          <Icon />
+          {turn ? (
+            <div>
+              {text}
+              <Icon />
+            </div>
+          ) : (
+            text
+          )}
         </span>
       }
       action={[

@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { START_PAGE } from "../../constants/routes";
+import { START_PAGE, DASHBOARD } from "../../constants/routes";
 
 import "./style.css";
 
@@ -26,6 +26,11 @@ function GameMenu({ turn, started, currentGameDuration, history }) {
   function exitGame() {
     setOpen(false);
     history.push(START_PAGE);
+  }
+
+  function goToDashboard() {
+    setOpen(false);
+    history.push(DASHBOARD);
   }
 
   const menuContent = () => (
@@ -42,6 +47,12 @@ function GameMenu({ turn, started, currentGameDuration, history }) {
           <ListItemText primary="Close menu" />
         </ListItem>
         <Divider />
+        <ListItem button key="go-to-dashboard" onClick={goToDashboard}>
+          <ListItemIcon>
+            <CloseIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
         <ListItem button key="exit-game" onClick={exitGame}>
           <ListItemIcon>
             <CloseIcon />
@@ -59,7 +70,6 @@ function GameMenu({ turn, started, currentGameDuration, history }) {
         aria-label="more"
         aria-controls="long-menu"
         aria-haspopup="true"
-        large
         onClick={toggleMenu}
       >
         <MenuIcon />

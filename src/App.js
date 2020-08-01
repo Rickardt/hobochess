@@ -16,14 +16,16 @@ import {
   CreateGame,
   LocalGame,
   LoginPage,
-  Dashboard
+  Dashboard,
+  OnlineGame
 } from "./pages";
 import {
   START_PAGE,
   LOGIN_PAGE,
   LOCAL_GAME_PAGE,
   CREATE_GAME,
-  DASHBOARD
+  DASHBOARD,
+  ONLINE_GAME_PAGE
 } from "./constants/routes";
 
 import Background from "./components/Background/Background";
@@ -36,25 +38,13 @@ import { Auth } from "aws-amplify";
 import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import { awsAuthConfig } from "./config/awsAuthConfig";
 import { getSession } from "./util/authFunctions";
+import GQLClient from "./gql/gqlClient";
 
 if (process.env.NODE_ENV === "production") {
   console.log = () => {};
 }
 
 Auth.configure(awsAuthConfig);
-
-// Set up Apollo client
-const client = new AWSAppSyncClient({
-  url:
-    "https://wyo23ywn7ve57ezgb6kv72nh5q.appsync-api.eu-west-1.amazonaws.com/graphql",
-  region: "eu-west-1",
-  auth: {
-    type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
-    jwtToken: async () =>
-      (await Auth.currentSession()).getIdToken().getJwtToken()
-  }
-  //disableOffline: true      //Uncomment for AWS Lambda
-});
 
 const history = createBrowserHistory();
 
@@ -66,7 +56,7 @@ const initialState = {
 function App() {
   return (
     <ErrorBoundary>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={GQLClient}>
         <div className="App">
           <StateProvider initialState={initialState} reducer={mainReducer}>
             <ThemeProvider theme={theme}>
@@ -79,6 +69,7 @@ function App() {
                         <Route path={LOCAL_GAME_PAGE} component={LocalGame} />
                         <Route path={CREATE_GAME} component={CreateGame} />
                         <Route path={LOGIN_PAGE} component={LoginPage} />
+                        <Route path={ONLINE_GAME_PAGE} component={OnlineGame} />
                         <Route
                           path={DASHBOARD}
                           history={history}

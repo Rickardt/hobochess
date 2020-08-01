@@ -12,7 +12,7 @@ import {
   SET_NEXT_TURN
 } from "../../constants/actions";
 
-function Board({ size, requiredLengtToWin }) {
+function Board({ size, requiredLengtToWin, onClick }) {
   const [{ boardState, playerState }, dispatch] = useStateValue();
   const { board, fiveInARow } = boardState;
   const { turn } = playerState;
@@ -39,6 +39,7 @@ function Board({ size, requiredLengtToWin }) {
 
   function onBoxClick(coordinates, owner) {
     console.log("Clicked coordinates: ", coordinates);
+    onClick(coordinates);
     dispatch({
       type: SET_NEXT_TURN
     });

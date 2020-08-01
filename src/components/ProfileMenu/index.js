@@ -34,7 +34,7 @@ function Profile({ userName, history }) {
             <ListItemIcon>
               <CloseIcon />
             </ListItemIcon>
-            <ListItemText primary="Profile settings" />
+            <ListItemText primary="Settings" />
           </ListItem>
           <Divider />
           <ListItem
