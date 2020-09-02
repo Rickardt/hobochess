@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
@@ -11,7 +11,13 @@ import CrossIcon from "@material-ui/icons/ClearOutlined";
 import { useStateValue } from "../../state/state";
 import "./Box.css";
 
-function Box({ yCoordinate, xCoordinate, onClick, initialAnimationTimeout }) {
+function Box({
+  yCoordinate,
+  xCoordinate,
+  onClick,
+  initialAnimationTimeout,
+  initialBoxOwner
+}) {
   const [{ playerState, boardState }, dispatch] = useStateValue();
   const [checked, setChecked] = useState(false);
   const [owner, setOwner] = useState(0);
@@ -26,6 +32,12 @@ function Box({ yCoordinate, xCoordinate, onClick, initialAnimationTimeout }) {
   const { icon, color } = boxProperties;
   const Icon = icon;
 
+  useEffect(() => {
+    if (initialBoxOwner) {
+      setBoxOwner();
+    }
+  }, []);
+
   function calculateTimeout() {
     const center = board.length / 2;
     const xCenter = (center % xCoordinate) * 100;
@@ -33,9 +45,8 @@ function Box({ yCoordinate, xCoordinate, onClick, initialAnimationTimeout }) {
     return xCenter + yCenter;
   }
 
-  function setBoxState() {
-    if (checked) return;
-    const boxOwner = playerState.turn;
+  function setBoxOwner() {
+    const boxOwner = initialBoxOwner ? initialBoxOwner : playerState.turn;
     setOwner(boxOwner);
     if (boxOwner === 1) {
       setBoxProperties({
@@ -49,7 +60,12 @@ function Box({ yCoordinate, xCoordinate, onClick, initialAnimationTimeout }) {
       });
     }
     setChecked(true);
-    const turn = onClick(coordinates, boxOwner);
+  }
+
+  function setBoxState() {
+    if (checked) return;
+    setBoxOwner();
+    const turn = onClick(coordinates, owner);
   }
 
   return (

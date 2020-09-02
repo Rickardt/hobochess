@@ -39,7 +39,6 @@ const LogoutModal = ({ open, onClose, history }) => {
         timeout: 500
       }}
       className="logout-modal"
-      large
     >
       <Card className="logout-modal">
         <h2>Are you sure you want to logout?</h2>

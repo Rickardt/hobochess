@@ -27,7 +27,7 @@ class ErrorBoundary extends React.Component {
     if (hasError) {
       return (
         <div className="error-container">
-          <h2>Oh shiiie! Something went terribly wrong!</h2>
+          <h2>Oh noes! Something went terribly wrong!</h2>
           <h4>
             Plz send this info to the developer and specify what you did to make
             this happen!

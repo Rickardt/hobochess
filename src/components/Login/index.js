@@ -12,7 +12,6 @@ import { isEmpty } from "../../util/validation";
 import { DASHBOARD, CONFIRM_ACCOUNT } from "../../constants/routes";
 
 function Login({ history }) {
-  //const { loading, error, data } = useQuery(EXCHANGE_RATES);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

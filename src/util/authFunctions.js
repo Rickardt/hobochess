@@ -102,6 +102,10 @@ function getUser() {
     .catch(err => console.log(err));
 }
 
+function getUserId() {
+  return getUser();
+}
+
 export {
   login,
   getToken,
@@ -110,5 +114,6 @@ export {
   confirmCreatedAccount,
   logout,
   getSession,
-  getUser
+  getUser,
+  getUserId
 };

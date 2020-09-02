@@ -16,10 +16,6 @@ function GameContainer({ history }) {
   } = boardState;
   const { turn } = playerState;
   const snackText = "Player turn: ";
-  const date = new moment().valueOf();
-  console.log(date);
-
-  useEffect(() => {}, []);
 
   function renderWin() {
     return (
@@ -29,7 +25,6 @@ function GameContainer({ history }) {
       </div>
     );
   }
-  console.log("ASD", boardSize);
   return (
     <div className="game-container">
       <GameStatsSnack text={snackText} turn={turn} />
@@ -37,7 +32,11 @@ function GameContainer({ history }) {
       {fiveInARow ? (
         renderWin()
       ) : (
-        <Board size={boardSize} requiredLengtToWin={requiredLengtToWin} />
+        <Board
+          size={boardSize}
+          requiredLengtToWin={requiredLengtToWin}
+          onClick={coor => console.log("asd?", coor)}
+        />
       )}
     </div>
   );
