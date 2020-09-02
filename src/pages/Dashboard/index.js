@@ -54,7 +54,7 @@ function Dashboard({ history }) {
           size: 8,
           createdByUserId: userId,
           playerOne: userId,
-          playerTwo: "2e965173-73ae-4a55-9e64-fb9995ecd604",
+          playerTwo: "57681af8-526b-4076-aaec-3b2ddc8205ac",
           playerTurn: userId,
           startedTime: today,
           lastMoveTime: today,

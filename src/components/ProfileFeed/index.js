@@ -20,22 +20,17 @@ function ProfileFeed() {
   const [gameList, setGameList] = useState([]);
 
   const [executeGetCurrentGame, { loading, data }] = useLazyQuery(
-    GET_GAME_BY_ID,
-    () => {
-      console.log("OK?");
-    },
-    () => {
-      console.log("OK?");
-    }
+    GET_GAME_BY_ID
   );
 
   if (data) {
   }
-
+  //81202156-5865-4e71-9bc9-5dd8f22b091b Rickie game
+  //5ff7b736-9cd4-4a79-bd14-b779a79207b3
   useEffect(() => {
     function getGameData() {
       executeGetCurrentGame({
-        variables: { id: "5ff7b736-9cd4-4a79-bd14-b779a79207b3" }
+        variables: { id: "81202156-5865-4e71-9bc9-5dd8f22b091b" }
       });
     }
     getGameData();
