@@ -3,8 +3,9 @@ import { OnlineGameContainer, Authenticator } from "../../components";
 import Board from "../../models/board";
 import "./style.css";
 import { GET_GAME_BY_ID } from "../../gql/queries/examleQueries";
+import { SUBSCRIBE_TO_GAME_BY_ID } from "../../gql/subscriptions/exampleSubscription";
 
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import Box from "../../components/Box/Box";
 
 function OnlineGame({ history, location, match }) {
@@ -13,7 +14,14 @@ function OnlineGame({ history, location, match }) {
     variables: { id: gameId }
   });
 
+  const { data, loading } = useSubscription(SUBSCRIBE_TO_GAME_BY_ID, {
+    variables: {
+      id: gameId
+    }
+  });
+
   let gameData;
+  console.log("DATA");
   if (initialGameData.data) {
     gameData = initialGameData.data.getHohochessGameData;
   }
@@ -21,9 +29,15 @@ function OnlineGame({ history, location, match }) {
     size,
     requiredLengtToWin,
     playerOneCoordinates,
-    playerTwoCoordinates
+    playerTwoCoordinates,
+    playerTurn,
+    playerOne,
+    playerTwo
   } = gameData ? gameData : {};
-  const board = new Board(size, Box, requiredLengtToWin);
+  const board = new Board(size, Box, requiredLengtToWin)
+    .setPlayerOne(playerOne)
+    .setPlayerTwo(playerTwo)
+    .setPlayerTurn(playerTurn);
 
   board.initializeBoard();
 
@@ -36,6 +50,11 @@ function OnlineGame({ history, location, match }) {
           board={board}
           playerOneCoordinates={playerOneCoordinates}
           playerTwoCoordinates={playerTwoCoordinates}
+          playerTurn={playerTurn}
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+          loading={loading}
+          gameData={data}
         />
       </div>
     </Authenticator>

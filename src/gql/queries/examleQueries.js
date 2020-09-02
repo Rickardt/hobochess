@@ -17,6 +17,7 @@ const GET_GAME_BY_ID = gql`
       createdByUserId
       playerOne
       playerTwo
+      playerTurn
       startedTime
       lastMoveTime
       playerOneCoordinates {

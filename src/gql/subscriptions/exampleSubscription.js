@@ -4,13 +4,7 @@ const SUBSCRIBE_TO_GAME_BY_ID = gql`
   subscription OnUpdateHohochessGameData($id: ID!) {
     onUpdateHohochessGameData(id: $id) {
       id
-      size
-      createdByUserId
-      playerOne
-      playerTwo
       playerTurn
-      startedTime
-      lastMoveTime
       playerOneCoordinates {
         x
         y
@@ -23,7 +17,6 @@ const SUBSCRIBE_TO_GAME_BY_ID = gql`
         x
         y
       }
-      requiredLengthToWin
       win
       winningPlayer
     }

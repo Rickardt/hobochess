@@ -4,7 +4,7 @@ import Column from "../Column/Column";
 import "./style.css";
 import { initializeBoard, checkForFiveInARow } from "../../util/boardFunctions";
 
-function OnlineBoard({ size, requiredLengtToWin, board }) {
+function OnlineBoard({ size, requiredLengtToWin, board, disableBoxes }) {
   function renderBoard() {
     let renderedBoard = [];
 
@@ -15,7 +15,12 @@ function OnlineBoard({ size, requiredLengtToWin, board }) {
           return box.component;
         });
         renderedBoard.push([
-          <Column key={i} timeOut={i * 200} children={columnHolder} />
+          <Column
+            key={i}
+            timeOut={i * 200}
+            children={columnHolder}
+            disableBoxes={disableBoxes}
+          />
         ]);
       });
     }

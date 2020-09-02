@@ -10,11 +10,53 @@ class Board {
   onClickCallback = null;
   playerOneCoordinates = [];
   playerTwoCoordinates = [];
+  playerOne = "";
+  playerTwo = "";
+  playerTurn = "";
 
   constructor(size, component, requiredLengtToWin) {
     this.size = size;
     this.Component = component;
     this.requiredLengtToWin = requiredLengtToWin;
+  }
+
+  setPlayerOne(playerOne) {
+    this.playerOne = playerOne;
+    return this;
+  }
+
+  getPlayerOne() {
+    return this.playerOne;
+  }
+
+  setPlayerTwo(playerTwo) {
+    this.playerTwo = playerTwo;
+    return this;
+  }
+
+  getPlayerTwo() {
+    return this.playerTwo;
+  }
+
+  setPlayerTurn(playerTurn) {
+    this.playerTurn = playerTurn;
+    return this;
+  }
+
+  getPlayerTurn() {
+    return this.playerTurn;
+  }
+
+  getNextPlayerTurn() {
+    return this.playerTurn === this.playerOne ? this.playerTwo : this.playerOne;
+  }
+
+  isPlayerPartOfGame(id: Sumber): Boolean {
+    return id === this.playerTwo || id === this.playerOne;
+  }
+
+  isMyTurn(id: String): Boolean {
+    return this.playerTurn === id;
   }
 
   initializeBoard() {

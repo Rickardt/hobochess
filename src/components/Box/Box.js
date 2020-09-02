@@ -16,7 +16,8 @@ function Box({
   xCoordinate,
   onClick,
   initialAnimationTimeout,
-  initialBoxOwner
+  initialBoxOwner,
+  disabled = false
 }) {
   const [{ playerState, boardState }, dispatch] = useStateValue();
   const [checked, setChecked] = useState(false);
@@ -78,6 +79,7 @@ function Box({
         value={owner}
         icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 90 }} />}
         checkedIcon={<Icon style={{ fontSize: 90 }} />}
+        disabled={disabled}
       />
     </Fade>
   );

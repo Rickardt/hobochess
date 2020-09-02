@@ -20,10 +20,10 @@ const httpLink = createHttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: WS_URL,
-  options: {
-    reconnect: true
-  }
+  uri: WS_URL
+  // options: {
+  //   reconnect: true
+  // }
 });
 
 // The split function takes three parameters:
@@ -31,17 +31,17 @@ const wsLink = new WebSocketLink({
 // * A function that's called for each operation to execute
 // * The Link to use for an operation if the function returns a "truthy" value
 // * The Link to use for an operation if the function returns a "falsy" value
-// const splitLink = split(
-//   ({ query }) => {
-//     const definition = getMainDefinition(query);
-//     return (
-//       definition.kind === "OperationDefinition" &&
-//       definition.operation === "subscription"
-//     );
-//   },
-//   wsLink,
-//   httpLink
-// );
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  httpLink
+);
 
 const awsLink = createAppSyncLink({
   url: API_URL,
@@ -52,13 +52,10 @@ const awsLink = createAppSyncLink({
     jwtToken: async () =>
       (await Auth.currentSession()).getAccessToken().getJwtToken()
   },
-  complexObjectsCredentials: () => Auth.currentCredentials(),
-  options: {
-    reconnect: true
-  }
+  complexObjectsCredentials: () => Auth.currentCredentials()
 });
 
 export default new ApolloClient({
-  link: awsLink.concat(httpLink).concat(wsLink),
+  link: awsLink.concat(splitLink),
   cache: new InMemoryCache()
 });
