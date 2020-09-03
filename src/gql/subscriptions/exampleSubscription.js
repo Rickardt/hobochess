@@ -5,6 +5,7 @@ const SUBSCRIBE_TO_GAME_BY_ID = gql`
     onUpdateHohochessGameData(id: $id) {
       id
       playerTurn
+      lastMoveTime
       playerOneCoordinates {
         x
         y
@@ -17,6 +18,7 @@ const SUBSCRIBE_TO_GAME_BY_ID = gql`
         x
         y
       }
+
       win
       winningPlayer
     }

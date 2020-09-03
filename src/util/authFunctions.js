@@ -1,4 +1,18 @@
-import { Auth } from "aws-amplify";
+import Amplify, { Auth, API } from "aws-amplify";
+import AWS from "aws-sdk";
+
+let nextToken;
+
+async function getUserList(limit) {
+  let allUsers = [];
+  let params = {
+    UserPoolId: "eu-west-1_9lAjKfcMK"
+  };
+  const cognito = new AWS.CognitoIdentityServiceProvider();
+  const rawUsers = await cognito.listUsers(params).promise();
+  allUsers = allUsers.concat(rawUsers.Users);
+  return allUsers;
+}
 
 function login(username, password) {
   return Auth.signIn({ username: username, password: password })
@@ -115,5 +129,6 @@ export {
   logout,
   getSession,
   getUser,
-  getUserId
+  getUserId,
+  getUserList
 };

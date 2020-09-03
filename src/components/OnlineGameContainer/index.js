@@ -33,33 +33,34 @@ function OnlineGameContainer({
     UPDATE_CURRENT_GAME
   );
   const isMyTurn = board.isMyTurn(userId);
-  const nextPlayerTurn = board.getNextPlayerTurn();
   console.log("user", user);
   console.log("board", board);
   function onClick(coordinates) {
-    if (isMyTurn) {
-      const x = coordinates.xCoordinate;
-      const y = coordinates.yCoordinate;
-      board.setCoordinateOwner(x, y, 1);
-      const pOneCoordinates = board.getPlayerOneCoordinates();
-      const pTwoCoordinates = board.getPlayerTwoCoordinates();
-      console.log(pOneCoordinates);
-      const today = new Date().toString();
-      updateCurrentGame({
-        variables: {
-          input: {
-            id: gameId,
-            lastMoveTime: today,
-            playerOneCoordinates: pOneCoordinates,
-            playerTwoCoordinates: pTwoCoordinates,
-            lastPlacedCoordinate: { x, y },
-            playerTurn: nextPlayerTurn,
-            win: false,
-            winningPlayer: "na"
-          }
+    // if (isMyTurn) {
+    const x = coordinates.xCoordinate;
+    const y = coordinates.yCoordinate;
+    const ownerNumber = board.isUserPlayerOne(userId) ? 1 : 2;
+    board.setCoordinateOwner(x, y, ownerNumber);
+    const pOneCoordinates = board.getPlayerOneCoordinates();
+    const pTwoCoordinates = board.getPlayerTwoCoordinates();
+    const today = new Date().toString();
+    const nextPlayerTurn = board.getNextPlayerTurn();
+
+    updateCurrentGame({
+      variables: {
+        input: {
+          id: gameId,
+          lastMoveTime: today,
+          playerOneCoordinates: pOneCoordinates,
+          playerTwoCoordinates: pTwoCoordinates,
+          lastPlacedCoordinate: { x, y },
+          playerTurn: nextPlayerTurn,
+          win: false,
+          winningPlayer: "na"
         }
-      });
-    }
+      }
+    });
+    // }
   }
   board.setOnClickCallback(onClick);
   board.setPlayerOneCoordinates(playerOneCoordinates);
@@ -81,7 +82,7 @@ function OnlineGameContainer({
           style={{ position: "absolute", top: "0px", width: "100%" }}
         />
       ) : null}
-      <GameStatsSnack text={yourTurnText} />
+      <GameStatsSnack text={isMyTurn ? yourTurnText : waitingForOpponentText} />
       <GameMenu turn={1} history={history} />
       <OnlineBoard size={size} board={board} disableBoxes={!isMyTurn} />
     </div>

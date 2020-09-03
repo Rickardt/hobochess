@@ -59,11 +59,19 @@ class Board {
     return this.playerTurn === id;
   }
 
-  initializeBoard() {
+  isUserPlayerOne(id: String): Boolean {
+    return this.playerOne === id;
+  }
+
+  isUserPlayerTwo(id: String): Boolean {
+    return this.playerTwo === id;
+  }
+
+  initializeBoard(): void {
     const Component = this.Component;
     this.board = Array(this.size).fill();
     this.board.map((item, i) => {
-      this.board[i] = this.board.map((derp, j) => {
+      this.board[i] = this.board.map((_, j) => {
         return {
           x: i,
           y: j,
@@ -105,21 +113,10 @@ class Board {
   }
 
   getPlayerOneCoordinates() {
-    // let coordinates = [];
-    // this.board.forEach(column => {
-    //   column.map(box =>
-    //     box.owner === 1 ? coordinates.push({ x: box.x, y: box.y }) : null
-    //   );
-    // });
     return this.playerOneCoordinates;
   }
 
   getPlayerTwoCoordinates() {
-    // const coordinates = this.board.map(column => {
-    //   return column.map(box =>
-    //     box.owner === 2 ? coordinates.push({ x: box.x, y: box.y }) : null
-    //   );
-    // });
     return this.playerTwoCoordinates;
   }
 

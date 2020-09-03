@@ -56,6 +56,6 @@ const awsLink = createAppSyncLink({
 });
 
 export default new ApolloClient({
-  link: awsLink.concat(splitLink),
+  link: awsLink.concat(httpLink),
   cache: new InMemoryCache()
 });
